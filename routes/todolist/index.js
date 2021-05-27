@@ -1,16 +1,15 @@
 'use strict'
 
-const S = require('fluent-json-schema')
-
 const {
   TodoListService
 } = require('./service')
 
 const createTodoListInput = {
   type: 'object',
+  required: ['name', 'tags'],
   properties: {
     name: { type: 'string' },
-    tags: { type: 'array', items: { type: 'string' } },
+    tags: { type: 'array', items: { type: 'string' } }
   }
 }
 
@@ -20,7 +19,7 @@ const todoListSchema = {
     _id: { type: 'string' },
     name: { type: 'string' },
     tags: { type: 'array', items: { type: 'string' } },
-    createdAt: { type: 'string' },
+    createdAt: { type: 'string' }
   }
 }
 const todoListListSchema = {
@@ -31,7 +30,7 @@ const todoListListSchema = {
 module.exports = async function (fastify, options) {
   fastify.register(require('fastify-mongodb'), {
     forceClose: true,
-    url: options.MONGODB_URL,
+    url: options.MONGODB_URL
   })
 
   fastify.addHook('onRequest', async (request, reply) => {
@@ -51,7 +50,7 @@ module.exports = async function (fastify, options) {
     const isAllowed = userRoles.some(r => allowedRoles[r])
 
     if (!isAllowed) {
-      throw fastify.httpErrors.unauthorized()
+      throw fastify.httpErrors.forbidden()
     }
   })
 
@@ -70,15 +69,15 @@ module.exports = async function (fastify, options) {
       },
       security: [
         {
-          "apiKey": []
+          apiKey: []
         }
       ]
     },
     config: {
-      allowedRoles: { admin: true },
+      allowedRoles: { admin: true }
     }
   }, insertTodoHandler)
-  
+
   fastify.get('/', {
     schema: {
       description: 'Return all todos',
@@ -88,12 +87,12 @@ module.exports = async function (fastify, options) {
       },
       security: [
         {
-          "apiKey": []
+          apiKey: []
         }
       ]
     },
     config: {
-      allowedRoles: { admin: true, reader: true },
+      allowedRoles: { admin: true, reader: true }
     }
   }, listTodoHandler)
 }
@@ -116,5 +115,3 @@ async function listTodoHandler (request) {
 
   return todos
 }
-
-module.exports

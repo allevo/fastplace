@@ -13,7 +13,7 @@ const body = S.object()
 
 module.exports = fp(async function (fastify, options) {
   fastify.register(require('fastify-jwt'), {
-    secret: options.JWT_SECRET,
+    secret: options.JWT_SECRET
   })
 
   fastify.post('/auth/login', {
@@ -29,7 +29,7 @@ module.exports = fp(async function (fastify, options) {
 async function loginHandler (request) {
   const { body: { username, password } } = request
 
-  const auth = new AuthService(this.jwt)
+  const auth = new AuthService(this.jwt, request.log)
 
   let dto
   try {

@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "tap \"test/**/*.test.js\"",
+    "test": "tap --coverage-report=html \"test/**/*.test.js\"",
     "start": "fastify start -l info app.js",
     "dev": "fastify start -w -l info -P app.js",
     "lint": "standard --fix"
@@ -31,6 +31,7 @@
     "pug": "^3.0.2"
   },
   "devDependencies": {
+    "codecov": "^3.8.2",
     "standard": "^16.0.3",
     "tap": "^15.0.9"
   }

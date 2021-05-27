@@ -1,9 +1,9 @@
-function onSubmit(event) {
+function onSubmit (event) {
   event.preventDefault()
-  const form = document.getElementById('login-form');
+  const form = document.getElementById('login-form')
   const elements = form.elements
-  const username = elements['username'].value
-  const password = elements['password'].value
+  const username = elements.username.value
+  const password = elements.password.value
 
   fetch('/auth/login', {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -16,7 +16,7 @@ function onSubmit(event) {
     },
     redirect: 'error', // manual, *follow, error
     referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-    body: JSON.stringify({ username, password }),
+    body: JSON.stringify({ username, password })
   })
     .then(r => {
       return r.json()

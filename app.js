@@ -11,18 +11,17 @@ module.exports = async function (fastify, opts) {
 
   const config = envSchema({
     schema: schema,
-    dotenv: true,
+    data: opts,
+    dotenv: true
   })
-
-  const o = Object.assign(config, opts)
 
   fastify.register(AutoLoad, {
     dir: path.join(__dirname, 'plugins'),
-    options: {},
+    options: {}
   })
   fastify.register(AutoLoad, {
     dir: path.join(__dirname, 'routes'),
-    options: Object.assign({}, o)
+    options: Object.assign({}, config)
   })
 }
 
