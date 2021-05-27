@@ -11,12 +11,12 @@ const body = S.object()
   .prop('username', S.string().required())
   .prop('password', S.string().required())
 
-module.exports = fp(async function (fastify) {
+module.exports = fp(async function (fastify, options) {
   fastify.register(require('fastify-jwt'), {
-    secret: 'supersecret'
+    secret: options.JWT_SECRET,
   })
 
-  fastify.post('/login', {
+  fastify.post('/auth/login', {
     schema: {
       description: '**Log your user**',
       tags: ['auth'],

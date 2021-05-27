@@ -28,10 +28,10 @@ const todoListListSchema = {
   items: todoListSchema
 }
 
-module.exports = async function (fastify) {
+module.exports = async function (fastify, options) {
   fastify.register(require('fastify-mongodb'), {
     forceClose: true,
-    url: 'mongodb://localhost:27017/todolist'
+    url: options.MONGODB_URL,
   })
 
   fastify.addHook('onRequest', async (request, reply) => {
